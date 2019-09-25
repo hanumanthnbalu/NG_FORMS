@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+input.ng-valid {
+	border-left: 5px solid #42a948;
+}
+.form-control:focus {
+	outline: none;
+	border-color: none;
+	box-shadow: none;
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+	cursor: not-allowed;
+}
+.collapse:not(.show) {
+	display: block !important;
+}
+input[type='radio'] {
+	margin-right: 5px;
+}
+label {
+	margin-bottom: .5rem;
+	display: flex !important;
+	flex-direction: row;
+	align-items: center;
+}
+.primary:disabled {
+	cursor: not-allowed;
+}
