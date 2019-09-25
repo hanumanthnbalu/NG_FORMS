@@ -15,6 +15,7 @@ export class CreateEmployeeComponent implements OnInit {
   fullNameLength = 0;
   public imagePath;
   imgURL: any;
+  employee;
   public message: string;
   formErrors = {
     'fullName': '',
@@ -215,6 +216,15 @@ export class CreateEmployeeComponent implements OnInit {
 
   onSubmit() {
     console.log(this.employeeForm);
+    this.employeeService.updateEmployee(this.employeeForm.value).subscribe()
+  }
+
+  mapFormValueToEmployeeModel() {
+    this.employee.fullName = this.employeeForm.value.fullName;
+    this.employee.contactPreference = this.employeeForm.value.contactPreference;
+    this.employee.email = this.employeeForm.value.emailGroup.email;
+    this.employee.phone = this.employeeForm.value.phone;
+    this.employee.skills = this.employeeForm.value.skills;
   }
 
 }
