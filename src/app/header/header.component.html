@@ -7,10 +7,11 @@
     align-items: center;
 ">
       <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" routerLink="list-employees">LIST</a>
+        <a class="nav-link" routerLinkActive="active" routerLink="employees"
+          [routerLinkActiveOptions]="{exact: true}">LIST</a>
       </li><br>
       <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" routerLink="create-employees">CREATE</a>
+        <a class="nav-link" routerLinkActive="active" routerLink="employees/create-employees">CREATE</a>
       </li>
     </ul>
   </div>

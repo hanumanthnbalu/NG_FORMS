@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IEmployee } from '../IEmployee';
 import { ISkill } from '../Iskill';
 
@@ -14,17 +14,16 @@ export class CreateEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
   fullNameLength = 0;
   public imagePath;
+  pageTitle;
   imgURL: any;
   employee;
+  employeeID;
   public message: string;
   formErrors = {
     'fullName': '',
     'email': '',
     'confirmEmail': '',
-    'phone': '',
-    // 'skillName': '',
-    // 'experienceInYears': '',
-    // 'proficiency': ''
+    'phone': ''
   };
 
   validationMessages = {
@@ -45,18 +44,12 @@ export class CreateEmployeeComponent implements OnInit {
     },
     'phone': {
       'required': 'Phone number is required.'
-    },
-    // 'skillName': {
-    //   'required': 'Skill Name is required.',
-    // },
-    // 'experienceInYears': {
-    //   'required': 'Experience is required.',
-    // },
-    // 'proficiency': {
-    //   'required': 'Proficiency is required.',
-    // },
+    }
   };
-  constructor(private fb: FormBuilder, private employeeService: EmployeeService, private router: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, 
+              private employeeService: EmployeeService, 
+              private router: ActivatedRoute,
+              private routers: Router) { }
   ngOnInit() {
     this.employeeForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
@@ -81,7 +74,18 @@ export class CreateEmployeeComponent implements OnInit {
     this.router.paramMap.subscribe(params => {
       const empId = +params.get('id');
       if (empId) {
+        this.pageTitle = 'Edit Employee';
         this.getEmployee(empId);
+      } else {
+        this.pageTitle = 'Create Employee';
+        this.employee = {
+          id: null,
+          fullName: '',
+          contactPreference: '',
+          email: '',
+          phone: null,
+          skills: []
+        };
       }
     });
   }
@@ -115,7 +119,6 @@ export class CreateEmployeeComponent implements OnInit {
         proficiency: s.proficiency
       }));
     });
-
     return formArray;
   }
   addSkillButtonClick(): void {
@@ -214,17 +217,26 @@ export class CreateEmployeeComponent implements OnInit {
     skillFormArray.markAsTouched();
   }
 
-  onSubmit() {
-    console.log(this.employeeForm);
-    this.employeeService.updateEmployee(this.employeeForm.value).subscribe()
-  }
-
-  mapFormValueToEmployeeModel() {
-    this.employee.fullName = this.employeeForm.value.fullName;
-    this.employee.contactPreference = this.employeeForm.value.contactPreference;
-    this.employee.email = this.employeeForm.value.emailGroup.email;
-    this.employee.phone = this.employeeForm.value.phone;
-    this.employee.skills = this.employeeForm.value.skills;
+  onSubmit(): void {
+    const employee: any = {
+      id: this.employeeID,
+      fullName : this.employeeForm.value.fullName,
+      contactPreference: this.employeeForm.value.contactPreference,
+      email: this.employeeForm.value.emailGroup.email,
+      phone: this.employeeForm.value.phone,
+      skills: this.employeeForm.value.skills
+    };
+    if (this.employeeID) {
+      this.employeeService.updateEmployee(this.employee).subscribe(
+        () => this.routers.navigate(['employees']),
+        (err: any) => console.log(err)
+      );
+    } else {
+      this.employeeService.addEmployee(this.employee).subscribe(
+        () => this.routers.navigate(['employees']),
+        (err: any) => console.log(err)
+      );
+    }
   }
 
 }

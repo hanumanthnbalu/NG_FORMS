@@ -2,15 +2,15 @@
 	"employees": [
 		{
 			"id": 1,
-			"fullName": "Mark",
-			"contactPreference": "email",
-			"email": "mark@email.com",
-			"phone": "5641238971",
+			"fullName": "Hanumanth",
+			"contactPreference": "phone",
+			"email": "hanumanthnbalu@gmail.com",
+			"phone": "9740113190",
 			"skills": [
 				{
-					"skillName": "C#",
+					"skillName": "Angular",
 					"experienceInYears": 1,
-					"proficiency": "beginner"
+					"proficiency": "intermediate"
 				},
 				{
 					"skillName": "Java",
@@ -22,7 +22,7 @@
 		{
 			"id": 2,
 			"fullName": "John",
-			"contactPreference": "phone",
+			"contactPreference": "email",
 			"email": "john@email.com",
 			"phone": "3242138971",
 			"skills": [

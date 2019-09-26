@@ -1,20 +1,18 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ListEmployeeComponent } from './forms/list-employee/list-employee.component';
-import { CreateEmployeeComponent } from './forms/create-employee/create-employeecomponent';
+import { EmployeeRoutingModule } from './forms/employee-routing.module';
 
 const route = [
-  { path: '', redirectTo: '/list-employees', pathMatch: 'full' },
-  { path: 'list-employees', component: ListEmployeeComponent },
-  { path: 'create-employees', component: CreateEmployeeComponent },
-  { path: 'edit/:id', component: CreateEmployeeComponent },
-	{ path: '**', component: NotFoundComponent }
+  { path: '', redirectTo: '/employees', pathMatch: 'full' },
+  { path: 'employees', loadChildren: './forms/employee.module#EmployeeModule' },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
-	imports: [ RouterModule.forRoot(route) ],
-	exports: [ RouterModule ]
+  imports: [ RouterModule.forRoot(route),
+             EmployeeRoutingModule
+            ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule {}

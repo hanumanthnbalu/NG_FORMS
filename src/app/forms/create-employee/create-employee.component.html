@@ -1,5 +1,6 @@
 <form class="form-horizontal" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
   <div class="well">
+    <h1 class="text-center" style="text-transform: uppercase;">{{pageTitle}}</h1><br>
 
     <div class="form-group" [ngClass]="{'has-error': formErrors.fullName}">
       <label class="col-sm-2 control-label" for="fullName">Full Name</label>
